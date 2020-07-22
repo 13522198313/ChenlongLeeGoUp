@@ -5,10 +5,12 @@
 //  Created by lcl on 2020/7/21.
 //  Copyright © 2020 LCL. All rights reserved.
 //
-
+#define MYFRAMEWORK_BUNDLE_IMG(imageName) [@"MyFramework.bundle" stringByAppendingPathComponent:imageName]
 #import "LoginTypeADMAndPWDemo.h"
-#import "CTSI_LoginView.h"
+//#import "CTSI_LoginView.h"
+#import <CTSI_LoginSDK/CTSI_LoginSDK.h>
 @interface LoginTypeADMAndPWDemo ()<CTSI_LoginViewDelegate>
+
 @property (nonatomic, strong) CTSI_LoginView *loginView;
 @end
 

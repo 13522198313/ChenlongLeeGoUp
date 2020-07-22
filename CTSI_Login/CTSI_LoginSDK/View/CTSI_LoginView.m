@@ -6,10 +6,13 @@
 //  Copyright © 2020 LCL. All rights reserved.
 //
 
-
+#define MYFRAMEWORK_BUNDLE_IMG(imageName) [@"CTSI_LoginSDK.bundle" stringByAppendingPathComponent:imageName]
 #define GAPH 20
 #import "CTSI_LoginView.h"
 #import "CTSI_LoginTypeView.h"
+#import "UIView+CT.h"
+#define kScreen_Height [UIScreen mainScreen].bounds.size.height
+#define kScreen_Width [UIScreen mainScreen].bounds.size.width
 @interface CTSI_LoginView()<CTSI_LoginTypeViewDelegate>
 @property (nonatomic, assign) BOOL isShowLoginAdmPinView;
 
@@ -408,7 +411,7 @@
 - (UIImageView *)bgView{
     if (!_bgView) {
         _bgView = [[UIImageView alloc] initWithFrame:self.frame];
-        _bgView.image = [UIImage imageNamed:@"CTSI_Login_bg"];
+        _bgView.image = [UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_Login_bg")];
     }
     return _bgView;
 }
@@ -417,7 +420,7 @@
     if (!_logoView) {
         _logoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width/3, self.frame.size.width/9)];
         _logoView.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/8);
-        _logoView.image = [UIImage imageNamed:@"CTSI_Login_logo"];
+        _logoView.image = [UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_Login_logo")];
     }
     return _logoView;
 }
@@ -440,8 +443,8 @@
         _telBtn = [[UIButton alloc] initWithFrame:CGRectMake(GAPH, CGRectGetMaxY(self.displayNameLab.frame) + GAPH, (self.frame.size.width - GAPH *2)/2, 40)];
         _telBtn.selected = YES;
         _telBtn.adjustsImageWhenHighlighted = NO;
-        [_telBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_Adm_normal"] forState:UIControlStateNormal];
-        [_telBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_Adm_select"] forState:UIControlStateSelected];
+        [_telBtn setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_Adm_normal")] forState:UIControlStateNormal];
+        [_telBtn setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_Adm_select")] forState:UIControlStateSelected];
         [_telBtn setTitle:@"统一认证方式" forState:UIControlStateNormal];
         [_telBtn setTitle:@"统一认证方式" forState:UIControlStateSelected];
         [_telBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
@@ -456,8 +459,8 @@
         _admBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.telBtn.frame), self.telBtn.frame.origin.y, (self.frame.size.width - GAPH *2)/2, 40)];
         _admBtn.selected = NO;
         _admBtn.adjustsImageWhenHighlighted = NO;
-        [_admBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_Pin_normal"] forState:UIControlStateNormal];
-        [_admBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_Pin_select"] forState:UIControlStateSelected];
+        [_admBtn setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_Pin_normal")] forState:UIControlStateNormal];
+        [_admBtn setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_Pin_select")] forState:UIControlStateSelected];
         [_admBtn setTitle:@"账号登录" forState:UIControlStateNormal];
         [_admBtn setTitle:@"账号登录" forState:UIControlStateSelected];
         [_admBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
@@ -478,8 +481,8 @@
 - (UIButton *)checkBtn{
     if (!_checkBtn) {
         _checkBtn = [[UIButton alloc] initWithFrame:CGRectMake(GAPH, CGRectGetMaxY(self.loginTypeView.frame) + GAPH, 20, 20)];
-        [_checkBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_checked"] forState:UIControlStateSelected];
-        [_checkBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_nochecked"] forState:UIControlStateNormal];
+        [_checkBtn setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_checked")] forState:UIControlStateSelected];
+        [_checkBtn setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_nochecked")] forState:UIControlStateNormal];
         [_checkBtn addTarget:self action:@selector(clickcheckBtn) forControlEvents:UIControlEventTouchUpInside];
         _checkBtn.adjustsImageWhenHighlighted = NO;
     }
@@ -506,8 +509,8 @@
     if (!_checkTwoBtn) {
         _checkTwoBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.agreementBtn.frame), self.agreementBtn.frame.origin.y, 20, 20)];
        
-            [_checkTwoBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_checked"] forState:UIControlStateSelected];
-            [_checkTwoBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_nochecked"] forState:UIControlStateNormal];
+            [_checkTwoBtn setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_checked")] forState:UIControlStateSelected];
+            [_checkTwoBtn setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_nochecked")] forState:UIControlStateNormal];
        
         
         [_checkTwoBtn addTarget:self action:@selector(clickCheckTwoBtn) forControlEvents:UIControlEventTouchUpInside];

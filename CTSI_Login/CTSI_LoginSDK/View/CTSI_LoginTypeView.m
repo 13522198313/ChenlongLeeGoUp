@@ -9,6 +9,8 @@
 #import "CTSI_LoginTypeView.h"
 #import "CTSI_LoginPinView.h"
 #import "CTSI_LoginAdmView.h"
+#define kScreen_Height [UIScreen mainScreen].bounds.size.height
+#define kScreen_Width [UIScreen mainScreen].bounds.size.width
 @interface CTSI_LoginTypeView()<UIScrollViewDelegate,CTSI_LoginPinViewDelegate,CTSI_LoginAdmViewDelegate>
 @property (nonatomic, strong) CTSI_LoginPinView *loginPinView;
 @property (nonatomic, strong) CTSI_LoginAdmView *loginAdmView;

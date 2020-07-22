@@ -5,8 +5,10 @@
 //  Created by lcl on 2020/6/11.
 //  Copyright © 2020 LCL. All rights reserved.
 //
-#define GAPH 20
+#define MYFRAMEWORK_BUNDLE_IMG(imageName) [@"CTSI_LoginSDK.bundle" stringByAppendingPathComponent:imageName]
 #import "CTSI_LoginAdmView.h"
+#import "UIView+CT.h"
+#define GAPH 20
 @interface CTSI_LoginAdmView()<UITextFieldDelegate>
 @property (nonatomic, strong) UIImageView *userImageView;/**用户名图标*/
 
@@ -73,11 +75,11 @@
     sender.selected = !sender.selected;
     if (sender.selected) {
         self.psTextField.secureTextEntry = NO;
-        [_showPw setBackgroundImage:[UIImage imageNamed:@"eye"] forState:UIControlStateNormal];
+        [_showPw setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"eye")] forState:UIControlStateNormal];
         
     }else{
         self.psTextField.secureTextEntry = YES;
-        [_showPw setBackgroundImage:[UIImage imageNamed:@"visible"] forState:UIControlStateNormal];
+        [_showPw setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"visible")] forState:UIControlStateNormal];
         
     }
 }
@@ -135,7 +137,7 @@
 - (UIImageView *)userImageView{
     if (!_userImageView) {
         _userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.lineView.frame.origin.x, self.lineView.frame.origin.y - 40, 30, 30)];
-        _userImageView.image = [UIImage imageNamed:@"CTSI_LoginView_username"];
+        _userImageView.image = [UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_username")];
     }
     return _userImageView;
 }
@@ -165,7 +167,7 @@
 - (UIImageView *)pwImageView{
     if (!_pwImageView) {
         _pwImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.userImageView.frame.origin.x, self.lineTwoView.frame.origin.y - 40, self.userImageView.frame.size.width, self.userImageView.frame.size.height)];
-        _pwImageView.image = [UIImage imageNamed:@"CTSI_LoginView_password"];
+        _pwImageView.image = [UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_password")];
     }
     return _pwImageView;
 }
@@ -196,7 +198,7 @@
 - (UIButton *)showPw{
     if (!_showPw) {
         _showPw = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.psTextField.frame), self.psTextField.frame.origin.y, 30, 30)];
-        [_showPw setBackgroundImage:[UIImage imageNamed:@"visible"] forState:UIControlStateNormal];
+        [_showPw setBackgroundImage:[UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"visible")] forState:UIControlStateNormal];
         [_showPw addTarget:self action:@selector(clickShowPwBtn:) forControlEvents:UIControlEventTouchUpInside];
         _showPw.adjustsImageWhenHighlighted = NO;
     }
@@ -235,7 +237,7 @@
         [_pinImageView addGestureRecognizer:tap];
         
         
-        _pinImageView.image = [UIImage imageNamed:@"CTSI_LoginView_AdmPin_placeholderImage"];
+        _pinImageView.image = [UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_AdmPin_placeholderImage")];
     }
     return _pinImageView;
 }

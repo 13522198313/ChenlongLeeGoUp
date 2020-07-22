@@ -5,8 +5,9 @@
 //  Created by lcl on 2020/6/11.
 //  Copyright © 2020 LCL. All rights reserved.
 //
-#define GAPH 20
+#define MYFRAMEWORK_BUNDLE_IMG(imageName) [@"CTSI_LoginSDK.bundle" stringByAppendingPathComponent:imageName]
 #import "CTSI_LoginPinView.h"
+#define GAPH 20
 @interface CTSI_LoginPinView()<UITextFieldDelegate>
 @property (nonatomic, strong) UIImageView *telImageView;/**手机号图标*/
 
@@ -122,7 +123,7 @@
 - (UIImageView *)telImageView{
     if (!_telImageView) {
         _telImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.lineView.frame.origin.x, self.lineView.frame.origin.y - 40, 30, 30)];
-        _telImageView.image = [UIImage imageNamed:@"CTSI_LoginView_username"];
+        _telImageView.image = [UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_username")];
     }
     return _telImageView;
 }
@@ -138,7 +139,7 @@
 - (UIImageView *)pinImageView{
     if (!_pinImageView) {
         _pinImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.telImageView.frame.origin.x, self.lineTwoView.frame.origin.y - 40, self.telImageView.frame.size.width, self.telImageView.frame.size.height)];
-        _pinImageView.image = [UIImage imageNamed:@"CTSI_LoginView_password"];
+        _pinImageView.image = [UIImage imageNamed:MYFRAMEWORK_BUNDLE_IMG(@"CTSI_LoginView_password")];
     }
     return _pinImageView;
 }
