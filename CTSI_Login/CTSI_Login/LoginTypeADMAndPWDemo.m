@@ -20,14 +20,25 @@
 }
 
 #pragma mark - CTSI_LoginViewDelegate
-
+/**查看协议*/
+- (void)CTSI_LoginViewDelegateClickAgreementBtn{
+    NSLog(@"CTSI_LoginViewDelegateClickAgreementBtn");
+}
+/**登陆*/
 - (void)CTSI_LoginViewDelegateClickLoginBtnWithUser:(NSString *)user withPW:(NSString *)pw withPin:(NSString *)pin{
   NSLog(@"user==%@",user);
     NSLog(@"pw==%@",pw);
     NSLog(@"pin==%@",pin);
       [self dismissViewControllerAnimated:YES completion:nil];
 }
-
+/**注册*/
+- (void)CTSI_LoginViewDelegateClickRegistBtn{
+    NSLog(@"CTSI_LoginViewDelegateClickRegistBtn");
+}
+/**忘记密码*/
+- (void)CTSI_LoginViewDelegateClickForgetPWDBtn{
+    NSLog(@"CTSI_LoginViewDelegateClickForgetPWDBtn");
+}
 #pragma mark - alloc init
 - (CTSI_LoginView *)loginView{
     if (!_loginView) {

@@ -21,7 +21,9 @@ typedef NS_ENUM(NSUInteger,LoginType){
 @required
 - (void)CTSI_LoginViewDelegateClickLoginBtnWithUser:(NSString *)user withPW:(NSString *)pw withPin:(NSString *)pin;
 @optional
-- (void)CTSI_LoginViewDelegateShowTip:(NSString *)tip;
+- (void)CTSI_LoginViewDelegateClickRegistBtn;
+- (void)CTSI_LoginViewDelegateClickForgetPWDBtn;
+- (void)CTSI_LoginViewDelegateClickAgreementBtn;
 
 
 @end

@@ -56,6 +56,18 @@
 }
 - (instancetype)initWithFrame:(CGRect)frame LoginType:(LoginType)loginType IsShowLoginAdmPinView:(BOOL)isShowLoginAdmPinView{
     if (self = [super initWithFrame:frame]) {
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_SelectSavePW"] == nil) {
+                    [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"CTSI_Login_SelectSavePW"];
+           
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+        
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_Agreement"] == nil) {
+                           [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"CTSI_Login_Agreement"];
+                  
+                           [[NSUserDefaults standardUserDefaults] synchronize];
+                       }
+        
               [self addSubview:self.bgView];
               [self addSubview:self.logoView];
               [self addSubview:self.displayNameLab];
@@ -71,11 +83,24 @@
               [self addSubview:self.forgetPWDBtn];
               [self addSubview:self.versionLab];
       
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_SelectSavePW"] isEqualToString:@"0"]) {
+          
+        }else{
+            self.checkTwoBtn.selected = YES;
+        }
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_Agreement"] isEqualToString:@"0"]) {
+                 
+               }else{
+                   self.checkBtn.selected = YES;
+               }
+       
+        
               self.isShowAgreement =  NO;
               self.isShowSavePW = NO;
               self.isShowRegist = NO;
               self.isShowForgetPW = NO;
-             
+        
+       
         [self setLoginWithType:loginType IsShowLoginAdmPinView:isShowLoginAdmPinView];
         
     }
@@ -222,15 +247,32 @@
 #pragma mark - 勾选协议
 - (void)clickcheckBtn{
     self.checkBtn.selected = !self.checkBtn.selected;
+    if (self.checkBtn.selected) {
+           NSLog(@"选择了同意协议");
+           [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"CTSI_Login_Agreement"];
+       }else{
+           [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"CTSI_Login_Agreement"];
+           NSLog(@"没选择了同意协议");
+       }
+    
+    
+  
 }
 
 - (void)clickCheckTwoBtn{
     self.checkTwoBtn.selected = !self.checkTwoBtn.selected;
+    if (self.checkTwoBtn.selected) {
+        NSLog(@"选择了记住密码");
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"CTSI_Login_SelectSavePW"];
+    }else{
+        [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"CTSI_Login_SelectSavePW"];
+        NSLog(@"没选择了记住密码");
+    }
 }
 
 #pragma mark - 用户协议
 - (void)clickAgreementBtn{
-    
+    [_delegate CTSI_LoginViewDelegateClickAgreementBtn];
 }
 
 #pragma mark - changeLoginTypeMethod
@@ -312,31 +354,54 @@
 - (void)setLogoImage:(UIImage *)logoImage{
     self.logoView.image = logoImage;
 }
+- (void)clickForgetPWDBtn{
+    [_delegate CTSI_LoginViewDelegateClickForgetPWDBtn];
+}
+- (void)clickRegistBtn{
+    [_delegate CTSI_LoginViewDelegateClickRegistBtn];
+}
 
 #pragma mark - CTSI_LoginTypeViewDelegate
 
 - (void)clickLoginBtn{
-    if (self.checkBtn.selected) {
-        NSLog(@"协议未勾选");
+//    if (self.checkBtn.selected) {
+//        NSLog(@"协议勾选");
+//    }else{
+//        NSLog(@"协议未勾选");
+//    }
+//
+//    if (self.checkTwoBtn.selected) {
+//        NSLog(@"记住密码");
+//
+//
+//    }else{
+//        NSLog(@"不记住密码");
+//
+//    }
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_SelectSavePW"] isEqualToString:@"1"]) {
+            
+       [_delegate CTSI_LoginViewDelegateClickLoginBtnWithUser:userName withPW:[[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_PW"] withPin:pinName];
+         
     }else{
-        NSLog(@"协议勾选");
+       [_delegate CTSI_LoginViewDelegateClickLoginBtnWithUser:userName withPW:passWord withPin:pinName];
+               
     }
     
-    if (self.checkTwoBtn.selected) {
-        NSLog(@"不记住密码");
-    }else{
-        NSLog(@"记住密码");
-    }
     
-    [_delegate CTSI_LoginViewDelegateClickLoginBtnWithUser:userName withPW:passWord withPin:pinName];
 }
-- (void)showTip:(NSString *)tip{
-    [_delegate CTSI_LoginViewDelegateShowTip:tip];
-}
+
 - (void)CTSI_LoginTypeViewDelegateWithUser:(NSString *)user withPW:(NSString *)pw withPin:(NSString *)pin{
+  
     userName = user;
     passWord = pw;
     pinName = pin;
+    
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_SelectSavePW"] isEqualToString:@"1"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:passWord forKey:@"CTSI_Login_PW"];
+         
+    }else{
+      [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"CTSI_Login_PW"];
+    }
 }
 
 
@@ -366,7 +431,7 @@
         _displayNameLab.numberOfLines = 0;
         _displayNameLab.textColor = [UIColor whiteColor];
         _displayNameLab.font = [UIFont systemFontOfSize:30];
-        //_displayNameLab.backgroundColor = [UIColor redColor];
+     
     }
     return _displayNameLab;
 }
@@ -405,7 +470,6 @@
 
 - (CTSI_LoginTypeView *)loginTypeView{
     if (!_loginTypeView) {
-        //_loginTypeView = [CTSI_LoginTypeView CTSI_LoginTypeViewWithFrame:CGRectMake(0, CGRectGetMaxY(self.displayNameLab.frame) + GAPH + self.admBtn.frame.size.height + GAPH, self.frame.size.width, self.height/4) withLoginType:@"2" IsShowLoginAdmPinView:YES];
         _loginTypeView = [[CTSI_LoginTypeView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.displayNameLab.frame) + GAPH + self.admBtn.frame.size.height + GAPH, self.frame.size.width, self.height/4)];
         _loginTypeView.delegate = self;
     }
@@ -415,8 +479,8 @@
 - (UIButton *)checkBtn{
     if (!_checkBtn) {
         _checkBtn = [[UIButton alloc] initWithFrame:CGRectMake(GAPH, CGRectGetMaxY(self.loginTypeView.frame) + GAPH, 20, 20)];
-        [_checkBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_nochecked"] forState:UIControlStateSelected];
-        [_checkBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_checked"] forState:UIControlStateNormal];
+        [_checkBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_checked"] forState:UIControlStateSelected];
+        [_checkBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_nochecked"] forState:UIControlStateNormal];
         [_checkBtn addTarget:self action:@selector(clickcheckBtn) forControlEvents:UIControlEventTouchUpInside];
         _checkBtn.adjustsImageWhenHighlighted = NO;
     }
@@ -442,8 +506,11 @@
 - (UIButton *)checkTwoBtn{
     if (!_checkTwoBtn) {
         _checkTwoBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.agreementBtn.frame), self.agreementBtn.frame.origin.y, 20, 20)];
-        [_checkTwoBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_nochecked"] forState:UIControlStateSelected];
-        [_checkTwoBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_checked"] forState:UIControlStateNormal];
+       
+            [_checkTwoBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_checked"] forState:UIControlStateSelected];
+            [_checkTwoBtn setBackgroundImage:[UIImage imageNamed:@"CTSI_LoginView_nochecked"] forState:UIControlStateNormal];
+       
+        
         [_checkTwoBtn addTarget:self action:@selector(clickCheckTwoBtn) forControlEvents:UIControlEventTouchUpInside];
         _checkTwoBtn.adjustsImageWhenHighlighted = NO;
         
@@ -480,6 +547,7 @@
         [_registBtn setBackgroundColor:[UIColor clearColor]];
         [_registBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_registBtn setTitle:@"注册账号" forState:UIControlStateNormal];
+        [_registBtn addTarget:self action:@selector(clickRegistBtn) forControlEvents:UIControlEventTouchUpInside];
     }
     return _registBtn;
 }
@@ -490,6 +558,7 @@
         [_forgetPWDBtn setBackgroundColor:[UIColor clearColor]];
         [_forgetPWDBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_forgetPWDBtn setTitle:@"忘记密码?" forState:UIControlStateNormal];
+        [_forgetPWDBtn addTarget:self action:@selector(clickForgetPWDBtn) forControlEvents:UIControlEventTouchUpInside];
     }
     return _forgetPWDBtn;
 }

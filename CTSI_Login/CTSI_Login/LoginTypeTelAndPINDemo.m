@@ -19,7 +19,24 @@
     // Do any additional setup after loading the view.
      [self.view addSubview:self.loginView];
 }
+/**查看协议*/
+- (void)CTSI_LoginViewDelegateClickAgreementBtn{
+    NSLog(@"CTSI_LoginViewDelegateClickAgreementBtn");
+}
+/**注册*/
+- (void)CTSI_LoginViewDelegateClickRegistBtn{
+    NSLog(@"CTSI_LoginViewDelegateClickRegistBtn");
+}
+/**忘记密码*/
+- (void)CTSI_LoginViewDelegateClickForgetPWDBtn{
+    NSLog(@"CTSI_LoginViewDelegateClickForgetPWDBtn");
+}
+/**登陆*/
 - (void)CTSI_LoginViewDelegateClickLoginBtnWithUser:(NSString *)user withPW:(NSString *)pw withPin:(NSString *)pin{
+    NSLog(@"tel===user==%@",user);
+    NSLog(@"tel===pw==%@",pw);
+    NSLog(@"tel===pin==%@",pin);
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

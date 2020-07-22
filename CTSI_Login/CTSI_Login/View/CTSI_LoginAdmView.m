@@ -84,22 +84,16 @@
     return YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    //换textField
-    
-    //NSString * toBeString = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""]; //得到输入框的内容
-    [_delegate CTSI_LoginAdmViewDelegateWithUser:self.usernameTextField.text withPW:self.psTextField.text withPin:self.pinTextField.text];
-    
-//    if ([toBeString isEqualToString:@""]) {
-//        if (textField == self.usernameTextField) {
-//            [_delegate showTip:@"用户名不能为空"];
-//        }else if (textField == self.psTextField){
-//            [_delegate showTip:@"密码不能为空"];
-//        }else if (textField == self.pinTextField){
-//            [_delegate showTip:@"验证码不能为空"];
-//        }
-//    }else{
-//        [_delegate CTSI_LoginAdmViewDelegateWithUser:self.usernameTextField.text withPW:self.psTextField.text withPin:self.pinTextField.text];
-//    }
+  NSString * toBeString = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""]; //得到输入框的内容
+  if (textField == self.usernameTextField) {
+         [_delegate CTSI_LoginAdmViewDelegateWithUser:toBeString withPW:self.psTextField.text withPin:self.pinTextField.text];
+  }else if (textField == self.psTextField){
+          [_delegate CTSI_LoginAdmViewDelegateWithUser:self.usernameTextField.text withPW:toBeString withPin:self.pinTextField.text];
+  }else{
+       [_delegate CTSI_LoginAdmViewDelegateWithUser:self.usernameTextField.text withPW:self.psTextField.text withPin:toBeString];
+  }
+   
+
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if ([string isEqualToString:@"\n"])  //按会车可以改变
@@ -107,20 +101,16 @@
         [textField resignFirstResponder];
         return YES;
     }
-   // NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string]; //得到输入框的内容
-//    if ([toBeString isEqualToString:@""]) {
-//        if (textField == self.usernameTextField) {
-//            [_delegate showTip:@"用户名不能为空"];
-//        }else if (textField == self.psTextField){
-//            [_delegate showTip:@"密码不能为空"];
-//        }else if (textField == self.pinTextField){
-//            [_delegate showTip:@"验证码不能为空"];
-//        }
-//    }else{
-        [_delegate CTSI_LoginAdmViewDelegateWithUser:self.usernameTextField.text withPW:self.psTextField.text withPin:self.pinTextField.text];
+           NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string]; //得到输入框的内容
+        if (textField == self.usernameTextField) {
+               [_delegate CTSI_LoginAdmViewDelegateWithUser:toBeString withPW:self.psTextField.text withPin:self.pinTextField.text];
+        }else if (textField == self.psTextField){
+                [_delegate CTSI_LoginAdmViewDelegateWithUser:self.usernameTextField.text withPW:toBeString withPin:self.pinTextField.text];
+        }else{
+             [_delegate CTSI_LoginAdmViewDelegateWithUser:self.usernameTextField.text withPW:self.psTextField.text withPin:toBeString];
+        }
+         
         
-        
-    //}
     return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -187,7 +177,15 @@
         _psTextField.secureTextEntry = YES;
         _psTextField.returnKeyType = UIReturnKeyDone;
         _psTextField.delegate = self;
-        _psTextField.text = @"";
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_SelectSavePW"] isEqualToString:@"1"]) {
+                   
+               _psTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_PW"];
+                
+           }else{
+               [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"CTSI_Login_PW"];
+               _psTextField.text = @"";
+           }
+        
     }
     return _psTextField;
 }
@@ -242,3 +240,4 @@
     return _pinImageView;
 }
 @end
+

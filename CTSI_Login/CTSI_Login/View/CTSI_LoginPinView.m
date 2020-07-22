@@ -7,7 +7,7 @@
 //
 #define GAPH 20
 #import "CTSI_LoginPinView.h"
-@interface CTSI_LoginPinView()
+@interface CTSI_LoginPinView()<UITextFieldDelegate>
 @property (nonatomic, strong) UIImageView *telImageView;/**手机号图标*/
 
 @property (nonatomic, strong) UIView *lineView;
@@ -15,10 +15,6 @@
 @property (nonatomic, strong) UIImageView *pinImageView;/**PIN图标*/
 
 @property (nonatomic, strong) UIView *lineTwoView;
-
-@property (nonatomic, strong) UITextField *telTextField;/**手机号*/
-
-@property (nonatomic, strong) UITextField *pinTextField;/**验证码*/
 
 @property (nonatomic, strong) UIButton *getPinBtn;/**获取验证码*/
 
@@ -75,6 +71,43 @@
               dispatch_resume(timer);
 }
 
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    return YES;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+  
+    NSString * toBeString = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""]; //得到输入框的内容
+    if (textField == self.telTextField) {
+           [_delegate CTSI_LoginPinViewDelegateWithTel:toBeString withPin:self.pinTextField.text];
+       }else{
+           [_delegate CTSI_LoginPinViewDelegateWithTel:self.telTextField.text withPin:toBeString];
+       }
+    
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+ 
+     
+    if ([string isEqualToString:@"\n"])  //按会车可以改变
+    {
+        [textField resignFirstResponder];
+        return YES;
+    }
+       NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string]; //得到输入框的内容
+    if (textField == self.telTextField) {
+        [_delegate CTSI_LoginPinViewDelegateWithTel:toBeString withPin:self.pinTextField.text];
+    }else{
+        [_delegate CTSI_LoginPinViewDelegateWithTel:self.telTextField.text withPin:toBeString];
+    }
+         
+    return YES;
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
 #pragma mark - alloc init
 - (UIView *)lineView{
     if (!_lineView) {
@@ -114,8 +147,10 @@
         _telTextField.placeholder = @"请输入手机号";
         _telTextField.textColor = [UIColor whiteColor];
         _telTextField.textAlignment = NSTextAlignmentLeft;
-       // _telTextField.backgroundColor = [UIColor redColor];
         [_telTextField setValue:[UIColor whiteColor] forKeyPath:@"placeholderLabel.textColor"];
+          _telTextField.returnKeyType = UIReturnKeyDone;
+        _telTextField.delegate = self;
+               _telTextField.text = @"";
     }
     return _telTextField;
 }
@@ -127,7 +162,9 @@
         _pinTextField.textColor = [UIColor whiteColor];
         _pinTextField.textAlignment = NSTextAlignmentLeft;
         [_pinTextField setValue:[UIColor whiteColor] forKeyPath:@"placeholderLabel.textColor"];
-        _pinTextField.keyboardType = UIKeyboardTypeNumberPad;
+        _pinTextField.returnKeyType = UIReturnKeyDone;
+               _pinTextField.delegate = self;
+                      _pinTextField.text = @"";
     }
     return _pinTextField;
 }

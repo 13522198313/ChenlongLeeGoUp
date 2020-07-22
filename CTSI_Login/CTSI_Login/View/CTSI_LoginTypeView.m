@@ -29,11 +29,7 @@
     return self;
 }
  
-#pragma \mark - CTSI_LoginAdmViewDelegate
-- (void)showTip:(NSString *)tip{
-   
-    [_delegate showTip:tip];
-}
+#pragma mark - CTSI_LoginAdmViewDelegate
 
 - (void)CTSI_LoginAdmViewDelegateWithUser:(nonnull NSString *)user withPW:(nonnull NSString *)pw withPin:(nonnull NSString *)pin {
     
@@ -46,6 +42,11 @@
     NSLog(@"CTSI_LoginPinViewDelegateGetPin");
     
 }
+
+- (void)CTSI_LoginPinViewDelegateWithTel:(nonnull NSString *)tel withPin:(nonnull NSString *)pin {
+     [_delegate CTSI_LoginTypeViewDelegateWithUser:tel withPW:@"" withPin:pin];
+}
+
 - (void)setIsShowLoginAdmPinView:(BOOL)isShowLoginAdmPinView{
     
     self.loginAdmView.isShowLoginAdmPinView = isShowLoginAdmPinView;
@@ -78,6 +79,8 @@
     }
     return _loginAdmView;
 }
+
+
 
 
 @end

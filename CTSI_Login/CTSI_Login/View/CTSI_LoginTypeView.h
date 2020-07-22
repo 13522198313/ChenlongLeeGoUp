@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol CTSI_LoginTypeViewDelegate <NSObject>
 
-- (void)showTip:(NSString *)tip;
 - (void)CTSI_LoginTypeViewDelegateWithUser:(NSString *)user withPW:(NSString *)pw withPin:(NSString *)pin;
 
 
