@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UITextField *telTextField;/**手机号*/
 @property (nonatomic, strong) UITextField *pinTextField;/**验证码*/
 @property (nonatomic,weak) id <CTSI_LoginPinViewDelegate> delegate;
+@property (nonatomic, assign) int length;
 @end
 
 NS_ASSUME_NONNULL_END

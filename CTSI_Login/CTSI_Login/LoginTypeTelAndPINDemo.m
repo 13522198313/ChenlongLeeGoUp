@@ -19,6 +19,13 @@
     // Do any additional setup after loading the view.
      [self.view addSubview:self.loginView];
 }
+
+
+
+/**获取验证码*/
+- (void)CTSI_LoginViewDelegateGetPinBtn{
+    NSLog(@"CTSI_LoginPinViewDelegateGetPin");
+}
 /**查看协议*/
 - (void)CTSI_LoginViewDelegateClickAgreementBtn{
     NSLog(@"CTSI_LoginViewDelegateClickAgreementBtn");
@@ -48,7 +55,7 @@
         
         _loginView = [CTSI_LoginView CTSI_LoginViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) withLoginType:LoginTypeTelAndPIN IsShowLoginAdmPinView:NO];
         _loginView.delegate = self;
-        
+        _loginView.length = 29;
         //LoginTypeADMAndPW
         //LoginTypeTelAndPIN
         //LoginTypeAll

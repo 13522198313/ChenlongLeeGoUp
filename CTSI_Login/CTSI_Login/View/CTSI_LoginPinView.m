@@ -37,10 +37,12 @@
     }
     return self;
 }
-
+- (void)setLength:(int)length{
+    _length = length;
+}
 - (void)clickGetPinBtn{
     [_delegate CTSI_LoginPinViewDelegateGetPin];
-    __block int time = 10;
+    __block int time = _length;
               __block UIButton *verifybutton = self.getPinBtn;
               verifybutton.titleLabel.textAlignment = NSTextAlignmentCenter;
               

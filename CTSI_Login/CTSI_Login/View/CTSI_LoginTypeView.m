@@ -35,11 +35,12 @@
     
     [_delegate CTSI_LoginTypeViewDelegateWithUser:user withPW:pw withPin:pin];
 }
-
+- (void)CTSI_LoginAdmViewDelegateChangePin{
+    [_delegate CTSI_LoginTypeViewDelegateChangePin];
+}
 #pragma mark - CTSI_LoginPinViewDelegate
 - (void)CTSI_LoginPinViewDelegateGetPin{
-    
-    NSLog(@"CTSI_LoginPinViewDelegateGetPin");
+    [_delegate CTSI_LoginTypeViewDelegateGetPinBtn];
     
 }
 
@@ -51,6 +52,13 @@
     
     self.loginAdmView.isShowLoginAdmPinView = isShowLoginAdmPinView;
     
+}
+- (void)setLength:(int)length{
+ 
+    self.loginPinView.length = length;
+}
+- (void)setPinImage:(UIImage *)pinImage{
+    self.loginAdmView.pinImage = pinImage;
 }
 #pragma mark - alloc init
 - (UIScrollView *)scr{

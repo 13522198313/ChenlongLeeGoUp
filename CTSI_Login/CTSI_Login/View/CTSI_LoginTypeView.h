@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol CTSI_LoginTypeViewDelegate <NSObject>
 
 - (void)CTSI_LoginTypeViewDelegateWithUser:(NSString *)user withPW:(NSString *)pw withPin:(NSString *)pin;
-
+- (void)CTSI_LoginTypeViewDelegateGetPinBtn;
+- (void)CTSI_LoginTypeViewDelegateChangePin;
 
 @end
 
@@ -21,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,weak) id <CTSI_LoginTypeViewDelegate> delegate;
 @property (nonatomic, strong) UIScrollView *scr;
 @property (nonatomic, assign) BOOL isShowLoginAdmPinView;
+/**获取验证码时长*/
+@property (nonatomic, assign) int length;
+@property (nonatomic, strong) UIImage *pinImage;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -147,7 +147,7 @@
                self.forgetPWDBtn.hidden = YES;
              
             self.loginTypeView.frame = CGRectMake(0, CGRectGetMaxY(self.displayNameLab.frame) + GAPH + GAPH, self.frame.size.width, self.height/6);
-           
+             
              
              self.checkBtn.frame = CGRectMake(GAPH, CGRectGetMaxY(self.loginTypeView.frame) + GAPH, 20, 20);
                self.agreementBtn.frame = CGRectMake(CGRectGetMaxX(self.checkBtn.frame), self.checkBtn.frame.origin.y, (self.frame.size.width - GAPH*4)*3/4, self.checkBtn.frame.size.height);
@@ -354,6 +354,17 @@
 - (void)setLogoImage:(UIImage *)logoImage{
     self.logoView.image = logoImage;
 }
+- (void)setLength:(int)length{
+    
+    self.loginTypeView.length = length;
+}
+
+- (void)setPinImage:(UIImage *)pinImage{
+    self.loginTypeView.pinImage = pinImage;
+}
+
+
+
 - (void)clickForgetPWDBtn{
     [_delegate CTSI_LoginViewDelegateClickForgetPWDBtn];
 }
@@ -361,35 +372,16 @@
     [_delegate CTSI_LoginViewDelegateClickRegistBtn];
 }
 
-#pragma mark - CTSI_LoginTypeViewDelegate
+
 
 - (void)clickLoginBtn{
-//    if (self.checkBtn.selected) {
-//        NSLog(@"协议勾选");
-//    }else{
-//        NSLog(@"协议未勾选");
-//    }
-//
-//    if (self.checkTwoBtn.selected) {
-//        NSLog(@"记住密码");
-//
-//
-//    }else{
-//        NSLog(@"不记住密码");
-//
-//    }
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_SelectSavePW"] isEqualToString:@"1"]) {
-            
        [_delegate CTSI_LoginViewDelegateClickLoginBtnWithUser:userName withPW:[[NSUserDefaults standardUserDefaults] objectForKey:@"CTSI_Login_PW"] withPin:pinName];
-         
     }else{
        [_delegate CTSI_LoginViewDelegateClickLoginBtnWithUser:userName withPW:passWord withPin:pinName];
-               
     }
-    
-    
 }
-
+#pragma mark - CTSI_LoginTypeViewDelegate
 - (void)CTSI_LoginTypeViewDelegateWithUser:(NSString *)user withPW:(NSString *)pw withPin:(NSString *)pin{
   
     userName = user;
@@ -404,7 +396,14 @@
     }
 }
 
+- (void)CTSI_LoginTypeViewDelegateGetPinBtn{
+    [_delegate CTSI_LoginViewDelegateGetPinBtn];
+   
+}
 
+- (void)CTSI_LoginTypeViewDelegateChangePin{
+    [_delegate CTSI_LoginViewDelegateChangePin];
+}
 #pragma mark - alloc init
 - (UIImageView *)bgView{
     if (!_bgView) {

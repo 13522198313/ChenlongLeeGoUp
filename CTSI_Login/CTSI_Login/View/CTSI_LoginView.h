@@ -19,13 +19,19 @@ typedef NS_ENUM(NSUInteger,LoginType){
 @protocol CTSI_LoginViewDelegate <NSObject>
 
 @required
+/**登陆*/
 - (void)CTSI_LoginViewDelegateClickLoginBtnWithUser:(NSString *)user withPW:(NSString *)pw withPin:(NSString *)pin;
 @optional
+/**注册*/
 - (void)CTSI_LoginViewDelegateClickRegistBtn;
+/**忘记密码*/
 - (void)CTSI_LoginViewDelegateClickForgetPWDBtn;
+/**查看协议*/
 - (void)CTSI_LoginViewDelegateClickAgreementBtn;
-
-
+/**获取验证码*/
+- (void)CTSI_LoginViewDelegateGetPinBtn;
+/**改变验证码*/
+- (void)CTSI_LoginViewDelegateChangePin;
 @end
 @interface CTSI_LoginView : UIView
 @property (nonatomic,weak) id <CTSI_LoginViewDelegate> delegate;
@@ -47,7 +53,10 @@ typedef NS_ENUM(NSUInteger,LoginType){
 @property (nonatomic, copy) NSString *appName;
 /**企业logo*/
 @property (nonatomic, strong) UIImage *logoImage;
-
+/**获取验证码时长*/
+@property (nonatomic, assign) int length;
+/**验证码图片*/
+@property (nonatomic, strong) UIImage *pinImage;
 @end
 
 
