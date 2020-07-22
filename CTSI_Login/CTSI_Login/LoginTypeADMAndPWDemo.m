@@ -71,6 +71,8 @@
         _loginView.isShowSavePW = YES;
         _loginView.isShowRegist = YES;
         _loginView.isShowForgetPW = YES;
+        
+        _loginView.bgImage = [UIImage imageNamed:@"CTSI_Login_bg1"];
     }
     return _loginView;
 }
