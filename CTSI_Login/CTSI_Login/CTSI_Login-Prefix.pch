@@ -1,0 +1,22 @@
+//
+//  CTSI_Login-Prefix.pch
+//  CTSI_Login
+//
+//  Created by lcl on 2020/7/21.
+//  Copyright © 2020 LCL. All rights reserved.
+//
+
+#ifndef CTSI_Login_Prefix_h
+#define CTSI_Login_Prefix_h
+
+
+#endif /* CTSI_Login_Prefix_h */
+
+#ifdef __OBJC__
+
+#import "UIView+CT.h"
+
+#endif
+
+#define kScreen_Height [UIScreen mainScreen].bounds.size.height
+#define kScreen_Width [UIScreen mainScreen].bounds.size.width
