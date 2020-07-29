@@ -183,6 +183,10 @@
                
                [self.loginTypeView.scr setContentOffset:CGPointMake(0, 0)];
                break;
+             
+             default:
+             break;
+             
        }
 }
 - (void)setIsShowAgreement:(BOOL)isShowAgreement{
