@@ -1,0 +1,24 @@
+//
+//  BIYI_Login.pch
+//  BIYI_LoginSDK
+//
+//  Created by lcl on 2020/9/11.
+//  Copyright © 2020 LCL. All rights reserved.
+//
+
+#ifndef BIYI_Login_pch
+#define BIYI_Login_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* BIYI_Login_pch */
+
+#ifdef __OBJC__
+
+#import "UIView+CT.h"
+
+#endif
+
+#define kScreen_Height [UIScreen mainScreen].bounds.size.height
+#define kScreen_Width [UIScreen mainScreen].bounds.size.width
